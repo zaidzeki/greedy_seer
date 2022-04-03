@@ -1,0 +1,2 @@
+bitcoinlib==0.6.4
+Flask==2.0.1
