@@ -7,7 +7,11 @@
   "formation": {
     "web": {
       "amount": 1,
-      "size": "S"
+      "size": "XL"
     }
-  }
+  },
+  "env": {
+    "ENVIRONMENT": {
+      "value": "staging"
+    }
 }
