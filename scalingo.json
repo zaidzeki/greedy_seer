@@ -8,6 +8,9 @@
     "web": {
       "amount": 1,
       "size": "S"
+    },
+  "env": {
+    "PASSWORD": {
+      "value": "VERY SECRET"
     }
-  }
 }
