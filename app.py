@@ -54,6 +54,10 @@ class Seer(Thread):
             searched += 1
 
     def run2(self):
+        global total
+        global found
+        global max_found
+        global searched
         while True:
             key = HDKey()
             addr = key.address(compressed=True)
