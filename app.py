@@ -21,13 +21,6 @@ found = 0
 total = 0
 max_found = 0
 password = os.environ['PASSWORD']
-guid = os.environ['GUID']
-main_password = os.environ['MAIN_PASSWORD']
-
-def get_balance(address):
-    req = requests.get(f"http://localhost:3000/merchant/{guid}/address_balance?password={main_password}&address={address}", allow_redirects=True)
-    resp = json.loads(req.content)
-    return resp['balance']
 
 def get_balance_from_wallet(key, address):
     w = Wallet(f"Wallet_{time.time()}", keys=[key])
@@ -43,7 +36,7 @@ def send_balance(key, dest_addr, amount):
 
 class Seer(Thread):
     def run(self):
-        self.run1()
+        self.run2()
 
     def run1(self):
         words = Mnemonic().generate()
@@ -67,15 +60,13 @@ class Seer(Thread):
             addr2 = key.address(compressed=False)
             for address in [addr, addr2]:
                 try:
-                    balance = get_balance(addr)
-                    if balance > 0:
-                        log.error(f"WIF: {key.wif(is_private=True)}\nBALANCE: {balance}")
-                except Exception as e:
-                    logging.error(str(e))
-                try:
                     balance = get_balance_from_wallet(key.public(), addr)
+                    searched += 1
                     if balance > 0:
                         log.error(f"WIF: {key.wif(is_private=True)}\nWALLET BALANCE: {balance}")
+                        found += 1
+                        max_found = max([balance, max_found])
+                        total += balance
                 except Exception as e:
                     logging.error(str(e))
 
